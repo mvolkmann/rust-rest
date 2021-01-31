@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#denon run --allow-net server.js
+deno run --allow-net server.js
