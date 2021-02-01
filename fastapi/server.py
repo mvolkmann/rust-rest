@@ -1,23 +1,22 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
 import time
+import uuid
 
 # JSON in request bodies of POST and PUT requests
 # is validated against this type definition.
 # When validation fails, the response status
 # is set to 422 Unprocessable Entity.
 class Dog(BaseModel):
-    id: Optional[int] = None
+    id: Optional[str] = None
     breed: str
     name: str
 
-dogs = {
-    1: {
-        'id': 1, 'breed': 'Whippet', 'name': 'Comet'
-    }
-}
+id = str(uuid.uuid4())
+dogs = {}
+dogs[id] = {'id': id, 'breed': 'Whippet', 'name': 'Comet'}
 
 app = FastAPI()
 app.add_middleware(
@@ -28,34 +27,40 @@ app.add_middleware(
     allow_headers=['*'])
 
 @app.get('/dog')
-def all_dogs():
-    return dogs.values()
+def get_dogs():
+    return list(dogs.values())
 
-@app.post('/dog', response_model=str)
+@app.get('/dog/{id}')
+def get_dog(id: str):
+    if id in dogs:
+        return dogs[id]
+    else:
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
+
+@app.post('/dog', status_code=201)
 def create_dog(dog: Dog):
-    id = round(time.time() * 1000)
+    id = str(uuid.uuid4())
     # dog['id'] = id # Why can't the dog object be modified?
     dict = dog.dict()
     dict['id'] = id
     dogs[id] = dict
-    return str(id)
+    return dict
 
-@app.put('/dog/{id}', response_model=str)
-def update_dog(dog: Dog, id: int):
+@app.put('/dog/{id}')
+def update_dog(dog: Dog, id: str):
     if id in dogs:
         # dog['id'] = id # Why can't the dog object be modified?
         dict = dog.dict()
         dict['id'] = id
         dogs[id] = dict
-        return ''
+        return dict
     else:
-        abort(404)
+        return Response(status_code=status.HTTP_404_NOT_FOUND)
 
 @app.delete('/dog/{id}')
-def delete_dog(id: int):
-    id = int(id)
+def delete_dog(id: str):
     if id in dogs:
         del dogs[id]
-        return ''
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
     else:
-        abort(404)
+        return Response(status_code=status.HTTP_404_NOT_FOUND)

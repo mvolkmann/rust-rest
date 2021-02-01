@@ -112,7 +112,7 @@ async fn main() {
         .and_then(|id: String, state: State| async move {
             let mut dog_map = state.write();
             if let Some(_dog) = dog_map.remove(&id) {
-                Ok(with_status("", StatusCode::OK))
+                Ok(with_status("", StatusCode::NO_CONTENT))
             } else {
                 Err(warp::reject::not_found())
             }

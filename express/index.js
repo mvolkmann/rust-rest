@@ -52,7 +52,7 @@ app.delete('/dog/:id', (req, res) => {
   const {id} = req.params;
   const exists = Boolean(dogs[id]);
   if (exists) delete dogs[id];
-  res.sendStatus(exists ? 200 : 404);
+  res.sendStatus(exists ? 204 : 404);
 });
 
 const port = 1234;

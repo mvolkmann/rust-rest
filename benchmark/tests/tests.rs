@@ -62,7 +62,7 @@ async fn it_uses_endpoints() -> Result<(), Box<dyn std::error::Error>> {
     // Delete Comet.
     let url = format!("{}/{}", BASE_URL, comet.id);
     let res = client.delete(&url).send().await?;
-    assert_eq!(res.status(), 200);
+    assert_eq!(res.status(), 204); // NO CONTENT
     let text = res.text().await?;
     assert!(text == "" || text == "OK");
     let res = client.get(&url).send().await?;

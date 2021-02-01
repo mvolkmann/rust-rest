@@ -69,6 +69,7 @@ async fn main() {
     fn delete_dog(id: String, state: State<MyState>) {
         let mut dog_map = state.dog_map.write();
         dog_map.remove(&id);
+        //TODO: How can you return a 204 NO CONTENT status?
     }
 
     #[get("/<id>", format = "json")]

@@ -1,0 +1,2 @@
+#!/usr/local/bin/bash
+uvicorn server:app --log-level error --port 1234

@@ -92,7 +92,7 @@ async fn main() -> tide::Result<()> {
             let id = req.param("id")?;
             let mut dog_map = req.state().dog_map.write();
             if let Some(_dog) = dog_map.remove(id) {
-                Ok(Response::new(StatusCode::Ok))
+                Ok(Response::new(StatusCode::NoContent))
             } else {
                 Ok(Response::new(StatusCode::NotFound))
             }

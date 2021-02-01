@@ -4,7 +4,7 @@ This repository demonstrates and benchmarks popular approaches
 for implementing REST services.
 HTTP server libraries that can be used to implement REST services
 exist for many programming languages.
-For now we will limit our focus to Rust, Node.js, and Deno.
+For now we will limit our focus to Rust, Node.js, Deno, and Python.
 
 Popular Rust frameworks for implementing REST services include:
 
@@ -21,6 +21,10 @@ The most popular Node.js library for implementing REST services is
 
 The most popular Deno library for implementing REST services is
 [oak](https://oakserver.github.io/oak/).
+
+The most popular Python libraries for implementing REST services are
+[Flask](https://flask.palletsprojects.com) and
+[FastAPI](https://fastapi.tiangolo.com).
 
 In order to demonstrate using each of these frameworks,
 we will implement the same set of CRUD REST services
@@ -98,7 +102,9 @@ and the benchmark code were:
 - Rust/rocket-web: 3.765 seconds
 - Rust/tide: 4.033 seconds
 - Deno/oak: 7.926 seconds
-- Node/express: 8.015 seconds
+- Node/Express: 8.015 seconds
+- Python/FastAPI: 11.718 seconds
+- Python/Flask: never completes; get "Operation timed out"
 
 To build a release version of one of the Rust-based servers,
 cd to its directory and enter `cargo build --release`.
@@ -112,6 +118,9 @@ To run the `oak` server, cd to its directory and enter `./run`.
 This executes a bash script that runs the server
 by executed the `deno` command with the `--allow-net` option
 which is required for a Deno program to accept HTTP requests.
+
+To run the `Flask` and `FastAPI` servers,
+cd to their directories and enter `./start`.
 
 To run the tests against the currently running server implementation,
 open a terminal, cd to the `benchmark` directory, and enter `cargo test`.

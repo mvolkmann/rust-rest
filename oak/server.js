@@ -91,7 +91,7 @@ function deleteDog(context) {
   const {id} = context.params;
   const exists = Boolean(dogs[id]);
   if (exists) delete dogs[id];
-  context.response.status = exists ? 200 : 404;
+  context.response.status = exists ? 204 : 404;
 }
 
 const router = new Router();

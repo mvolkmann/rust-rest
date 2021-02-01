@@ -1,2 +1,0 @@
-#!/usr/local/bin/bash
-uvicorn server:app --port 1234

@@ -7,15 +7,18 @@
     "Kornel",
     "Patrik",
     "Ryhl",
+    "Unprocessable",
     "actix",
     "cupsofcoffee",
     "danbruder",
     "jonnyboy",
     "jsonify",
     "mbrubeck",
+    "pydantic",
     "quinedot",
     "reqwest",
     "scottmcm",
-    "uuidv"
+    "uuidv",
+    "werkzeug"
   ]
 }
