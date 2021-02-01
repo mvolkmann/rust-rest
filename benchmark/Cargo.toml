@@ -1,5 +1,5 @@
 [package]
-name = "rust-rest"
+name = "benchmark"
 version = "0.1.0"
 authors = ["R. Mark Volkmann <r.mark.volkmann@gmail.com>"]
 edition = "2018"
