@@ -1,5 +1,5 @@
 use parking_lot::RwLock;
-use rust_warp_demo::{Dog, NewDog};
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::convert::Infallible;
 use std::sync::Arc;
@@ -7,6 +7,21 @@ use uuid::Uuid;
 use warp::http::StatusCode;
 use warp::reply::{json, with_status, Json, Reply};
 use warp::{Filter, Rejection};
+
+// We need to implement the "Clone" trait in order to
+// call the "cloned" method in the "get_dogs" route.
+#[derive(Clone, Debug, Deserialize, Serialize)]
+struct Dog {
+    id: String,
+    breed: String,
+    name: String,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct NewDog {
+    breed: String,
+    name: String,
+}
 
 type DogMap = HashMap<String, Dog>;
 

@@ -46,9 +46,36 @@ Rust-based REST services are implemented in the
 Deno-based REST services are implemented in the `oak` directory.
 Node-based REST services are implemented in the `express` directory.
 
+REST servers often require coordinating access
+to data that is shared between threads.
+Common ways to do this include using a `Mutex` or `RwLock`.
+There are multiple implementations available for each of these.
+Consider using those in `std::sync` and the `parking_lot` crate.
+
+The `parking_lot` versions of `Mutex` and `RwLock`
+are generally preferred over the `std::sync` versions for reasons described at
+[`parking_lot::Mutex`](https://docs.rs/parking_lot/0.11.1/parking_lot/type.Mutex.html)
+and
+[`parking_lot::RwLock`](https://docs.rs/parking_lot/0.11.1/parking_lot/type.RwLock.html).
+The reasons include better poison handling, less memory usage,
+better fairness of lock sharing, and better performance.
+
+To gain exclusive access to a value wrapped in a `Mutex`,
+call its `lock` method. The lock is automatically released
+when the value returned by this method goes out of scope.
+
+To gain non-exclusive read access to a value wrapped in a `RwLock`,
+call its `read` method. There can be any number of concurrent readers.
+To gain exclusive write access to a value wrapped in a `RwLock`,
+call its `write` method.
+This will block until there are no other readers or writers.
+Like with a `Mutex`, the lock is automatically released
+when the value returned by the `read` or `write` method goes out of scope.
+
 The `benchmark` directory contains the file `tests/test.rs`
 which is a Rust program that uses the `reqwest` crate
 to send HTTP requests to the currently running server implementation.
+Study this for examples of using `reqwest`.
 It deletes any existing dogs, creates two dogs, deletes the first dog,
 updates the name of the second dog, and verifies that all of these
 operations result in the expected response status and body.
