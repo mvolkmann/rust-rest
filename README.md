@@ -13,7 +13,7 @@ Popular Rust frameworks for implementing REST services include:
 - [warp](https://crates.io/crates/warp)
 - [tide](https://crates.io/crates/tide)
 
-These are compared at {% aTargetBlank
+These are compared at
 [Choosing a Rust web framework, 2020 edition](https://www.lpalmieri.com/posts/2020-07-04-choosing-a-rust-web-framework-2020-edition/).
 
 The most popular Node.js library for implementing REST services is
