@@ -1,0 +1,4 @@
+#!/usr/local/bin/bash
+export FLASK_APP=server.py
+export FLASK_ENV=production
+flask run --port=1234
