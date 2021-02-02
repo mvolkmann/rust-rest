@@ -3,7 +3,7 @@ extern crate rocket;
 
 use parking_lot::RwLock;
 //use rocket::config::{Config, Environment};
-//use rocket::response::status::Created;
+use rocket::response::status::{Created, NoContent};
 //use rocket::fairing::AdHoc;
 use rocket::State;
 use rocket_contrib::json::Json;
@@ -49,7 +49,7 @@ async fn main() {
 
     #[post("/", format = "json", data = "<json>")]
     //fn create_dog(json: Json<NewDog>, state: State<MyState>) -> Created<Json> {
-    fn create_dog(json: Json<NewDog>, state: State<MyState>) -> Json<Dog> {
+    fn create_dog(json: Json<NewDog>, state: State<MyState>) -> Created<Json<Dog>> {
         let new_dog = json.into_inner();
         let id = Uuid::new_v4().to_string();
         let dog = Dog {
@@ -57,12 +57,11 @@ async fn main() {
             name: new_dog.name,
             breed: new_dog.breed,
         };
+        let url = format!("http://localhost:1234/dog/{}", &id);
         let mut dog_map = state.dog_map.write();
         dog_map.insert(id, dog.clone());
 
-        //let url = format!("http://localhost:1234/dog/{}", id);
-        //Created(url, Some(Json(dog)))
-        Json(dog)
+        Created::new(url).body(Json(dog))
     }
 
     #[delete("/<id>")]
@@ -70,6 +69,7 @@ async fn main() {
         let mut dog_map = state.dog_map.write();
         dog_map.remove(&id);
         //TODO: How can you return a 204 NO CONTENT status?
+        NoContent::new().body("")
     }
 
     #[get("/<id>", format = "json")]

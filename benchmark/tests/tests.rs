@@ -22,7 +22,7 @@ async fn delete_all_dogs(client: &Client) -> Result<(), Box<dyn std::error::Erro
     let dogs = get_all_dogs(client).await?;
     for dog in dogs {
         let url = format!("{}/{}", BASE_URL, dog.id);
-        client.delete(&url).send().await?.text().await?;
+        client.delete(&url).send().await?;
     }
     Ok(())
 }

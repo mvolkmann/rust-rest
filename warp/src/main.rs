@@ -68,10 +68,14 @@ async fn main() {
             if let Some(dog) = dog_map.get(&id) {
                 Ok(warp::reply::json(&dog))
             } else {
-                //TODO: This is returning a 405 instead of 404!
                 Err(warp::reject::not_found())
             }
-        });
+        })
+        .recover(not_found);
+
+    async fn not_found(_err: Rejection) -> Result<impl warp::Reply, Rejection> {
+        Ok(StatusCode::NOT_FOUND)
+    }
 
     let create_dog = warp::path!("dog")
         .and(warp::post())

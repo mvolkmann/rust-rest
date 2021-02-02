@@ -27,7 +27,7 @@ async fn delete_all_dogs(client: &Client) -> Result<(), Box<dyn std::error::Erro
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let count: usize = 10000;
-    //let count: usize = 2;
+    //let count: usize = 3000; // 2500 works in Flask, 3000 gives "operation timed out"
     let client = reqwest::Client::new();
 
     // Delete all the current dogs to start with an empty collection.
