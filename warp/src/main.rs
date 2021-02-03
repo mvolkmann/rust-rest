@@ -70,8 +70,7 @@ async fn main() {
             } else {
                 Err(warp::reject::not_found())
             }
-        })
-        .recover(not_found);
+        });
 
     async fn not_found(_err: Rejection) -> Result<impl warp::Reply, Rejection> {
         Ok(StatusCode::NOT_FOUND)
@@ -124,9 +123,12 @@ async fn main() {
 
     //TODO: Learn how to get this to use TLS/HTTPS.
     let routes = get_dogs
-        .or(get_dog)
         .or(create_dog)
         .or(update_dog)
-        .or(delete_dog);
+        .or(delete_dog)
+        .or(get_dog)
+        // The next line addresses the issue where a GET /dog/bad-id
+        // is converted from a 404 Not Found to a 405 Method Not Allowed.
+        .recover(not_found);
     warp::serve(routes).run(([127, 0, 0, 1], 1234)).await;
 }
