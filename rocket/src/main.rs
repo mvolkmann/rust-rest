@@ -65,7 +65,7 @@ async fn main() {
     }
 
     #[delete("/<id>")]
-    fn delete_dog(id: String, state: State<MyState>) {
+    fn delete_dog(id: String, state: State<MyState>) -> NoContent {
         let mut dog_map = state.dog_map.write();
         dog_map.remove(&id);
         NoContent
