@@ -77,7 +77,6 @@ async fn update_dog(
 #[delete("/dog/{id}")]
 async fn delete_dog(req: HttpRequest, state: web::Data<RwLock<AppState>>) -> Result<HttpResponse> {
     let id = req.match_info().get("id").unwrap();
-    //println!("deleting dog with id {}", id);
     let mut state = state.write();
     if let Some(_dog) = state.dog_map.remove(id) {
         Ok(HttpResponse::NoContent().finish())
