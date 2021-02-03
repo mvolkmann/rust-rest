@@ -63,17 +63,15 @@ async fn main() {
     let get_dog = warp::path!("dog" / String)
         .and(warp::get())
         .and(with_state(state.clone()))
-        .and_then(|id, state: State| async move {
-            let dog_map = state.read();
-            if let Some(dog) = dog_map.get(&id) {
-                Ok(warp::reply::json(&dog))
-            } else {
-                Err(warp::reject::not_found())
-            }
-        });
+        .and_then(handle_get_dog);
 
-    async fn not_found(_err: Rejection) -> Result<impl warp::Reply, Rejection> {
-        Ok(StatusCode::NOT_FOUND)
+    async fn handle_get_dog(id: String, state: State) -> Result<impl Reply, Infallible> {
+        let dog_map = state.read();
+        if let Some(dog) = dog_map.get(&id) {
+            Ok(with_status(json(&dog), StatusCode::OK))
+        } else {
+            Ok(with_status(json(&""), StatusCode::NOT_FOUND))
+        }
     }
 
     let create_dog = warp::path!("dog")
@@ -126,9 +124,6 @@ async fn main() {
         .or(create_dog)
         .or(update_dog)
         .or(delete_dog)
-        .or(get_dog)
-        // The next line addresses the issue where a GET /dog/bad-id
-        // is converted from a 404 Not Found to a 405 Method Not Allowed.
-        .recover(not_found);
+        .or(get_dog);
     warp::serve(routes).run(([127, 0, 0, 1], 1234)).await;
 }
