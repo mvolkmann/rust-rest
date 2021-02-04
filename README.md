@@ -99,7 +99,7 @@ and the benchmark code were:
 
 - Rust/actix-web: 3.098 seconds
 - Rust/warp: 3.236 seconds
-- Rust/rocket-web: 3.765 seconds
+- Rust/rocket: 3.765 seconds
 - Rust/tide: 4.033 seconds
 - Deno/oak: 7.926 seconds
 - Node/Express: 8.015 seconds
