@@ -89,7 +89,7 @@ support the required endpoints with the same functionality.
 The `benchmark` directory contains the file `src/main.rs`
 which is a Rust program that, like the test program, uses the `reqwest` crate
 to send HTTP requests to the currently running server implementation.
-It deletes any existing dogs, starts a timer, creates 10,000 dogs
+It deletes any existing dogs, starts a timer, creates 10,000 dogs,
 retrieves all of them in a single request,
 updates all of them, deletes all of them, and reports the elapsed time.
 
