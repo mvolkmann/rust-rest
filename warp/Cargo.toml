@@ -6,6 +6,9 @@ edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[profile.release]
+lto = true # link-time optimization
+
 [dependencies]
 parking_lot = "0.11.1"
 reqwest = { version = "0.11.0", features = ["json"] }

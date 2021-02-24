@@ -97,18 +97,17 @@ The latest benchmark results using release builds
 (optimized by the Rust compiler) of the Rust servers
 and the benchmark code were:
 
-- Rust/actix-web: 3.098 seconds
-- Rust/warp: 3.236 seconds
-- Rust/rocket: 3.765 seconds
-- Rust/tide: 4.033 seconds
+- Rust/actix-web: 2.873 seconds
+- Rust/warp: 3.176 seconds
+- Rust/rocket: 3.619 seconds
+- Rust/tide: 3.687 seconds
 - Deno/oak: 7.926 seconds
 - Node/Express: 8.015 seconds
 - Python/FastAPI: 11.718 seconds
 - Python/Flask: never completes; get "Operation timed out"
 
-To build a release version of one of the Rust-based servers,
-cd to its directory and enter `cargo build --release`.
-To run the server, enter `./target/release/{executable-name}`.
+To build and run a release version of one of the Rust-based servers,
+cd to its directory and enter `cargo run --release`.
 
 To install the dependencies needed by the `express` server,
 cd to its directory and enter `npm install`.
@@ -125,10 +124,8 @@ cd to their directories and enter `./start`.
 To run the tests against the currently running server implementation,
 open a terminal, cd to the `benchmark` directory, and enter `cargo test`.
 
-To build a release version of the Rust-based benchmark program,
-cd to the `benchmark` directory and enter `cargo build --release`.
-To run the benchmark program against the currently running server,
-enter `./target/release/benchmark`.
+To build and run a release version of the Rust-based benchmark program,
+cd to the `benchmark` directory and enter `cargo run --release`.
 
 If you are a maintainer or user of any of the frameworks
 demonstrated here and feel that the way I have used them
